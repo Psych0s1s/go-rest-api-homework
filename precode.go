@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -43,6 +44,7 @@ var tasks = map[string]Task{
 func getTasks(w http.ResponseWriter, r *http.Request) {
 	resp, err := json.MarshalIndent(tasks, "", "  ")
 	if err != nil {
+		log.Printf("Ошибка при маршалинге задач: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
